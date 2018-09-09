@@ -1,5 +1,6 @@
 #include "inc/Encrypt.h"
-#include <iostream>
+#include "inc/OperationOnFile.h"
+#include "inc/Signature.h"
 
 int main() {
     Operation op;
@@ -13,7 +14,20 @@ int main() {
     std::cout << op.step_bg(9, 2, 23, 6, 4) << std::endl; // 5
 
     Encrypt encrypt;
-    std::cout << encrypt.shamir(10, {7, 19}, {5, 9}, 23) << std::endl;
-    std::cout << encrypt.gamal(17, {13, 21}, 5, 7, 23) << std::endl;
+    int64_t m = 20;
+    int64_t P = 23;
+    auto[Ca, Da] = op.getCD(7, P);
+    auto[Cb, Db] = op.getCD(5, P);
+    printf("Ca: %ld\t Da: %ld\n"
+           "Cb: %ld\t Db: %ld\n", Ca, Da, Cb, Db);
+
+    std::cout << encrypt.shamir(m, {Ca, Da}, {Cb, Db}, P) << std::endl;
+    std::cout << encrypt.gamal(m, {13, 21}, 5, P) << std::endl;
+
+    std::cout << encrypt.rsa(m, 3, 11) << std::endl;
+
+    Signature sig;
+    Signature::RSA_data d = sig.EnRsa("lol");
+    std::cout << std::boolalpha << sig.DeRsa(d) << std::endl;
     return 0;
 }

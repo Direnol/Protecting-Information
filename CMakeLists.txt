@@ -14,7 +14,15 @@ target_link_libraries(Encryption Operation)
 set(SRC_BIGINT src/BigInteger.cpp inc/BigInteger.h)
 add_library(BigInt ${SRC_BIGINT})
 
+set(SRC_OOF src/OperationOnFile.cpp inc/OperationOnFile.h)
+add_library(OpOnFile ${SRC_OOF})
+
+set(SRC_SIGN src/Signature.cpp inc/Signature.h)
+add_library(Signature ${SRC_SIGN})
+target_link_libraries(Signature Operation crypto)
+
 add_executable(clion main.cpp)
-target_link_libraries(clion Encryption BigInt)
+target_link_libraries(clion Encryption BigInt OpOnFile Signature)
+
 
 get_cmake_property(clion CMAKE_CXX_FLAGS)

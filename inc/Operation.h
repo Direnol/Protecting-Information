@@ -21,7 +21,7 @@ using map = std::map<T, K>;
 template<class T, class K>
 using pair = std::pair<T, K>;
 
-using user_key = pair<uint64_t, uint64_t>;
+using user_key = pair<int64_t, int64_t>;
 
 template<class T>
 using set = std::set<T>;
@@ -33,17 +33,26 @@ public:
 
     ~Operation();
 
-    uint64_t powmod(uint64_t a, uint64_t b, uint64_t c);
+    int64_t powmod(int64_t a, int64_t b, int64_t c);
 
-    uint64_t gcd(uint64_t a, uint64_t b);
+    int64_t gcd(int64_t a, int64_t b);
 
     user_key diff_hell(user_key A, user_key B);
 
     vector<int64_t> evklid(int64_t a, int64_t b);
 
-    uint64_t step_bg(uint64_t y, uint64_t a, uint64_t p, uint64_t m, uint64_t k);
+    int64_t step_bg(int64_t y, int64_t a, int64_t p, int64_t m, int64_t k);
 
-    user_key gen_cd(uint64_t c);
+    int64_t getG(int64_t P, int64_t Q);
+
+    bool simpleNum(int64_t P);
+
+    void simNum(int64_t &P, int64_t &Q);
+
+    int64_t getQ();
+
+    pair<int64_t, int64_t> getCD(int64_t C, int64_t P);
+
 };
 
 

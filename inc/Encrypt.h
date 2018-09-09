@@ -14,13 +14,13 @@ class Encrypt {
 private:
     Operation op;
 public:
-    uint64_t shamir(uint64_t m, user_key A, user_key B, uint64_t p);
+    int64_t shamir(int64_t m, user_key A, user_key B, int64_t p);
 
-    uint64_t gamal(uint64_t m, user_key B, uint64_t g, uint64_t k, uint64_t p);
+    int64_t gamal(int64_t m, user_key B, int64_t g, int64_t p);
 
-    uint64_t vernam();
+    int64_t vernam(int64_t m, int64_t k);
 
-    uint64_t rsa();
+    int64_t rsa(int64_t m, int64_t P, int64_t Q);
 };
 
 

@@ -10,9 +10,10 @@ Operation::Operation() = default;
 Operation::~Operation() = default;
 
 // (a ** b) % c
-uint64_t Operation::powmod(uint64_t a, uint64_t b, uint64_t c)
+int64_t Operation::powmod(int64_t a, int64_t b, int64_t c)
 {
-    uint64_t res = 1;
+    int64_t res = 1;
+    a %= c;
     for (; b != 0; b >>= 1) {
         if (b & 0x1) res = (res * a) % c;
         a = (a * a) % c;
@@ -20,12 +21,12 @@ uint64_t Operation::powmod(uint64_t a, uint64_t b, uint64_t c)
     return res;
 }
 
-uint64_t Operation::gcd(uint64_t a, uint64_t b)
+int64_t Operation::gcd(int64_t a, int64_t b)
 {
     if (a == b) return a;
     if (a < b) std::swap(a, b);
     while (b) {
-        uint64_t tmp = b;
+        int64_t tmp = b;
         b = a % b;
         a = tmp;
     }
@@ -36,8 +37,8 @@ uint64_t Operation::gcd(uint64_t a, uint64_t b)
 user_key Operation::diff_hell(user_key A, user_key B)
 {
 
-    uint64_t Ya = powmod(B.first, A.first, B.second);
-    uint64_t Yb = powmod(B.first, A.second, B.second);
+    int64_t Ya = powmod(B.first, A.first, B.second);
+    int64_t Yb = powmod(B.first, A.second, B.second);
     return {powmod(Yb, A.first, B.second),
             powmod(Ya, A.second, B.second)};
 }
@@ -54,26 +55,27 @@ vector<int64_t> Operation::evklid(int64_t a, int64_t b)
         u = v;
         v = t;
     }
+    if (u[2] <= 0) u[2] += a;
     return u;
 }
 
 // y = (a ** x) mod p
 // return x
-uint64_t Operation::step_bg(uint64_t y, uint64_t a, uint64_t p, uint64_t m, uint64_t k)
+int64_t Operation::step_bg(int64_t y, int64_t a, int64_t p, int64_t m, int64_t k)
 {
     if ((m * k) <= p) throw std::runtime_error("Bad arguments: m and k");
-    set<pair<uint64_t, uint64_t>> row;
+    set<pair<int64_t, int64_t>> row;
     y %= p;
-    uint64_t am = a % p;
+    int64_t am = a % p;
     row.insert(std::make_pair(y, 0));
-    for (uint64_t i = 1; i < m; ++i) {
+    for (int64_t i = 1; i < m; ++i) {
         row.insert(std::make_pair((y * a) % p, i));
         a = (a * am) % p;
     }
     auto max = row.end();
-    uint64_t maxi = 1;
-    for (uint64_t i = 1; i <= k; ++i) {
-        max = std::lower_bound(row.begin(), row.end(), static_cast<pair<uint64_t, uint64_t>>(std::make_pair(a, 0)));
+    int64_t maxi = 1;
+    for (int64_t i = 1; i <= k; ++i) {
+        max = std::lower_bound(row.begin(), row.end(), static_cast<pair<int64_t, int64_t>>(std::make_pair(a, 0)));
         if (max->first == a) {
             maxi = i;
             break;
@@ -86,7 +88,53 @@ uint64_t Operation::step_bg(uint64_t y, uint64_t a, uint64_t p, uint64_t m, uint
     return (maxi * m) - max->second;
 }
 
-user_key Operation::gen_cd(uint64_t c)
+int64_t Operation::getG(int64_t P, int64_t Q)
 {
-    return user_key();
+    int64_t g = 2 + rand() % P;
+    while (true) {
+        if (powmod(g, Q, P) == 1 && (1 < g) && (g < (P - 1)))
+            break;
+        g = 2 + rand() % P;
+    }
+    return g;
 }
+
+bool Operation::simpleNum(int64_t P)
+{
+    auto p = static_cast<int64_t>(sqrtl(P));
+    for (int64_t i = 2; i <= p; i++) {
+        if ((P % i) == 0) return false;
+    }
+    return true;
+}
+
+void Operation::simNum(int64_t &P, int64_t &Q)
+{
+    while (true) {
+        Q = getQ();
+        P = 2 * Q + 1;
+        if (simpleNum(P))
+            break;
+    }
+}
+
+int64_t Operation::getQ()
+{
+    int64_t Q = 0;
+    while (true) {
+        Q = static_cast<int64_t>(5000 + rand() % 5000);
+        if (simpleNum(Q)) return Q;
+    }
+}
+
+pair<int64_t, int64_t> Operation::getCD(int64_t C, int64_t P)
+{
+    auto ans = evklid(C, (P - 1));
+    while (ans[0] != 1) {
+        C = 1 + rand() % (P - 1);
+        ans = evklid(C, (P - 1));
+    }
+    return std::make_pair(C, ans[2]);
+}
+
+
