@@ -14,20 +14,29 @@ int main() {
     std::cout << op.step_bg(9, 2, 23, 6, 4) << std::endl; // 5
 
     Encrypt encrypt;
-    int64_t m = 20;
+    int64_t m = 10;
     int64_t P = 23;
+    int64_t g = 5; //1 + (rand() % P);
     auto[Ca, Da] = op.getCD(7, P);
     auto[Cb, Db] = op.getCD(5, P);
     printf("Ca: %ld\t Da: %ld\n"
            "Cb: %ld\t Db: %ld\n", Ca, Da, Cb, Db);
 
+    data info = {1, 2, 3};
+    Encrypt::gamal_data gd = encrypt.Egamal(info, Ca, g, P);
+    data res = encrypt.Dgamal(gd, Ca, P);
+    std::cout << "Gamal: " << std::boolalpha << encrypt.equal(info, res) << std::endl;
+    encrypt.printData(res);
+    std::cout << std::endl;
+
+
+    Encrypt::rsa_data rd = encrypt.Ersa(info, 3, 11);
+    res = encrypt.Drsa(rd);
+    std::cout << "Rsa: " << std::boolalpha << encrypt.equal(info, res) << std::endl;
+    encrypt.printData(res);
+    std::cout << std::endl;
+
     std::cout << encrypt.shamir(m, {Ca, Da}, {Cb, Db}, P) << std::endl;
-    std::cout << encrypt.gamal(m, {13, 21}, 5, P) << std::endl;
 
-    std::cout << encrypt.rsa(m, 3, 11) << std::endl;
-
-    Signature sig;
-    Signature::RSA_data d = sig.EnRsa("lol");
-    std::cout << std::boolalpha << sig.DeRsa(d) << std::endl;
     return 0;
 }
