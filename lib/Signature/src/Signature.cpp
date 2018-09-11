@@ -2,7 +2,7 @@
 // Created by stanley on 09.09.18.
 //
 
-#include "../inc/Signature.h"
+#include <Signature.h>
 
 auto Signature::EnRsa(string data) -> Signature::RSA_data
 {

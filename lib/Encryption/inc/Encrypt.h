@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include "Operation.h"
+#include <Operation.h>
 
 using string = std::string;
 using data = std::vector<int64_t>;

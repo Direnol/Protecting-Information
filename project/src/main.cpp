@@ -1,6 +1,8 @@
-#include "inc/Encrypt.h"
-#include "inc/OperationOnFile.h"
-#include "inc/Signature.h"
+#include <Encrypt.h>
+#include <OperationOnFile.h>
+#include <Signature.h>
+#include <Operation.h>
+#include <iostream>
 
 int main() {
     Operation op;

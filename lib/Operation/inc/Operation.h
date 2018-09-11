@@ -11,6 +11,9 @@
 #include <map>
 #include <set>
 #include <algorithm>
+#include <cstring>
+#include <chrono>
+#include <random>
 
 template<class T>
 using vector = std::vector<T>;
@@ -53,6 +56,8 @@ public:
 
     pair<int64_t, int64_t> getCD(int64_t C, int64_t P);
 
+    uint64_t getRand();
+    uint64_t getRand(uint64_t a, uint64_t b);
 };
 
 

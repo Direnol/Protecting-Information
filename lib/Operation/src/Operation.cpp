@@ -1,8 +1,6 @@
 //
 // Created by stanley on 04.09.18.
 //
-
-#include <cstring>
 #include "../inc/Operation.h"
 
 Operation::Operation() = default;
@@ -90,11 +88,11 @@ int64_t Operation::step_bg(int64_t y, int64_t a, int64_t p, int64_t m, int64_t k
 
 int64_t Operation::getG(int64_t P, int64_t Q)
 {
-    int64_t g = 2 + rand() % P;
+    int64_t g = 2 + this->getRand() % P;
     while (true) {
         if (powmod(g, Q, P) == 1 && (1 < g) && (g < (P - 1)))
             break;
-        g = 2 + rand() % P;
+        g = 2 + this->getRand() % P;
     }
     return g;
 }
@@ -122,7 +120,7 @@ int64_t Operation::getQ()
 {
     int64_t Q = 0;
     while (true) {
-        Q = static_cast<int64_t>(5000 + rand() % 5000);
+        Q = this->getRand(1, 5000);
         if (simpleNum(Q)) return Q;
     }
 }
@@ -131,10 +129,24 @@ pair<int64_t, int64_t> Operation::getCD(int64_t C, int64_t P)
 {
     auto ans = evklid(C, (P - 1));
     while (ans[0] != 1) {
-        C = 1 + rand() % (P - 1);
+        C = 1 + this->getRand() % (P - 1);
         ans = evklid(C, (P - 1));
     }
     return std::make_pair(C, ans[2]);
 }
 
+uint64_t Operation::getRand() {
+    long seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine rand_generator(seed);
+    std::uniform_int_distribution<uint64_t> distribution(0, INT64_MAX);
+    uint64_t ret = distribution(rand_generator);
+    return ret;
+}
 
+uint64_t Operation::getRand(uint64_t a, uint64_t b) {
+    long seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine rand_generator(seed);
+    std::uniform_int_distribution<uint64_t> distribution(a, b);
+    uint64_t ret = distribution(rand_generator);
+    return ret;
+}
