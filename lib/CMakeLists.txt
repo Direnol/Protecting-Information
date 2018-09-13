@@ -1,5 +1,5 @@
-add_subdirectory(Operation)
-add_subdirectory(BigInteger)
-add_subdirectory(Encryption)
-add_subdirectory(OperationOnFile)
-add_subdirectory(Signature)
+set(DIRS Operation OperationOnFile Encryption Signature)
+
+foreach(loop ${DIRS})
+    add_subdirectory(${loop})
+endforeach(loop)
