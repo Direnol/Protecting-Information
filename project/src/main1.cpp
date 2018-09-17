@@ -11,6 +11,5 @@ int main() {
     evklid_ret_t evk = op.evklid(28, 19);
     std::cout << "Extended Evklid (28, 19) return: " << evk[0] << " x=" << evk[1] << " y=" << evk[2] << std::endl; // 1 -2 3
     std::cout << "Baby-step giant-step (9, 2, 23, 6, 4) return: " << op.step_bg(9, 2, 23, 6, 4) << std::endl; // 5
-
     return 0;
 }

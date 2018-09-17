@@ -1,8 +1,7 @@
 //
 // Created by stanley on 05.09.18.
 //
-
-#include "../inc/Encrypt.h"
+#include <Encrypt.h>
 
 // message, {Ca, Da}, {Cb, Db}
 int64_t Encrypt::shamir(int64_t m, user_key A, user_key B, int64_t p)
@@ -18,7 +17,7 @@ int64_t Encrypt::shamir(int64_t m, user_key A, user_key B, int64_t p)
 
 Encrypt::gamal_data Encrypt::Egamal(data m, int64_t C, int64_t g, int64_t p)
 {
-    int64_t k = 1 + rand() % (p - 1);
+    int64_t k = 1 + op.getRand() % (p - 2);
     int64_t r = op.powmod(g, k, p);
     int64_t D = op.powmod(g, C, p);
     data e;
@@ -52,7 +51,7 @@ Encrypt::rsa_data Encrypt::Ersa(data m, int64_t P, int64_t Q)
 {
     int64_t Nb = P * Q;
     int64_t F = (P - 1) * (Q - 1);
-    auto[Db, Cb] = op.getCD(1 + rand() % (F - 1), F + 1);
+    auto[Db, Cb] = op.getCD(1 + op.getRand() % (F - 1), F + 1);
     data e;
     for (auto d : m) {
         e.push_back(op.powmod(d, Db, Nb));

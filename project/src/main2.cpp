@@ -32,5 +32,8 @@ int main() {
 
     std::cout << encrypt.shamir(m, {Ca, Da}, {Cb, Db}, P) << std::endl;
 
+    int64_t evern_ret = encrypt.Evernam(m, 123);
+    std::cout << encrypt.Dvernam(evern_ret, 123);
+
     return 0;
 }
