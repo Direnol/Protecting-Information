@@ -43,7 +43,7 @@ user_key Operation::diff_hell(user_key A, user_key B)
 
 // ax + by = gcd(a, b)
 // return {gcd(a, b), x, y}
-vector<int64_t> Operation::evklid(int64_t a, int64_t b)
+evklid_ret_t Operation::evklid(int64_t a, int64_t b)
 {
     if (a < b) std::swap(a, b);
     vector<int64_t> u = {a, 1, 0}, v = {b, 0, 1};
@@ -97,7 +97,7 @@ int64_t Operation::getG(int64_t P, int64_t Q)
     return g;
 }
 
-bool Operation::simpleNum(int64_t P)
+bool Operation::is_simple(int64_t P)
 {
     auto p = static_cast<int64_t>(sqrtl(P));
     for (int64_t i = 2; i <= p; i++) {
@@ -106,14 +106,16 @@ bool Operation::simpleNum(int64_t P)
     return true;
 }
 
-void Operation::simNum(int64_t &P, int64_t &Q)
+simple_pair_pq Operation::get_simple_pair()
 {
+    int64_t P, Q;
     while (true) {
         Q = getQ();
         P = 2 * Q + 1;
-        if (simpleNum(P))
+        if (this->is_simple(P))
             break;
     }
+    return std::make_pair(P, Q);
 }
 
 int64_t Operation::getQ()
@@ -121,7 +123,7 @@ int64_t Operation::getQ()
     int64_t Q = 0;
     while (true) {
         Q = this->getRand(1, 5000);
-        if (simpleNum(Q)) return Q;
+        if (is_simple(Q)) return Q;
     }
 }
 

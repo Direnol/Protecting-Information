@@ -29,6 +29,10 @@ using user_key = pair<int64_t, int64_t>;
 template<class T>
 using set = std::set<T>;
 
+using evklid_ret_t = std::vector<int64_t>;
+
+using simple_pair_pq = std::pair<int64_t, int64_t>;
+
 class Operation {
 private:
 public:
@@ -42,15 +46,15 @@ public:
 
     user_key diff_hell(user_key A, user_key B);
 
-    vector<int64_t> evklid(int64_t a, int64_t b);
+    evklid_ret_t evklid(int64_t a, int64_t b);
 
     int64_t step_bg(int64_t y, int64_t a, int64_t p, int64_t m, int64_t k);
 
     int64_t getG(int64_t P, int64_t Q);
 
-    bool simpleNum(int64_t P);
+    bool is_simple(int64_t P);
 
-    void simNum(int64_t &P, int64_t &Q);
+    simple_pair_pq get_simple_pair();
 
     int64_t getQ();
 

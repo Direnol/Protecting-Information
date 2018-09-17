@@ -15,5 +15,5 @@ endfunction(add_exec_link)
 
 
 add_exec_link(${PROJECT_NAME}-1 src/main1.cpp)
-set(LIBS Encrypt)
+set(LIBS Encryption)
 add_exec_link(${PROJECT_NAME}-2 src/main2.cpp)
