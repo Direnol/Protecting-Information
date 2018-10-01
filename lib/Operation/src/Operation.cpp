@@ -129,6 +129,7 @@ int64_t Operation::getQ()
 
 pair<int64_t, int64_t> Operation::getCD(int64_t C, int64_t P)
 {
+    if (C == 0) C = 1 + this->getRand() % (P - 1);
     auto ans = evklid(C, (P - 1));
     while (ans[0] != 1) {
         C = 1 + this->getRand() % (P - 1);

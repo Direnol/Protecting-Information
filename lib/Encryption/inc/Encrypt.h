@@ -8,45 +8,22 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <cstdint>
 #include <Operation.h>
 
-using string = std::string;
-using data = std::vector<int64_t>;
-
-
-
 class Encrypt {
-private:
+protected:
     Operation op;
 public:
-    struct gamal_data {
-        data e;
-        int64_t r;
-    };
+    virtual int64_t Encode(int64_t m) = 0;
 
-    struct rsa_data {
-        data e;
-        int64_t C;
-        int64_t N;
-    };
-    int64_t shamir(int64_t m, user_key A, user_key B, int64_t p);
+    virtual void Encode(std::istream &in, std::ostream &out) = 0;
 
-    gamal_data Egamal(data m, int64_t C, int64_t g, int64_t p);
+    virtual int64_t Decode(int64_t m) = 0;
 
-    data Dgamal(gamal_data e, int64_t C, int64_t p);
+    virtual void Decode(std::istream &in, std::ostream &out) = 0;
 
-    int64_t Evernam(int64_t m, int64_t k);
-
-    int64_t Dvernam(int64_t e, int64_t k);
-
-    rsa_data Ersa(data m, int64_t P, int64_t Q);
-
-    data Drsa(rsa_data e);
-
-    void printData(data m, std::ostream &out = std::cout);
-
-    bool equal(data m, data e);
+    virtual void print() = 0;
 };
-
 
 #endif //CLION_ENCRYPT_H
