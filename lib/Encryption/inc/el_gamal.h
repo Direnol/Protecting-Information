@@ -15,17 +15,18 @@ public:
 
     void print() override;
 
-    el_gamal();
+    el_gamal(const std::string &in_file, const std::string &out_file);
 
-    el_gamal(int64_t P, int64_t Q, int64_t C, int64_t g);
+    el_gamal(const std::string &in_file, const std::string &out_file, int64_t P, int64_t Q, int64_t C,
+             int64_t g);
 
     int64_t Encode(int64_t m) override;
 
-    void Encode(std::istream &in, std::ostream &out) override;
+    void Encode() override;
 
     int64_t Decode(int64_t m) override;
 
-    void Decode(std::istream &in, std::ostream &out) override;
+    void Decode() override;
 };
 
 

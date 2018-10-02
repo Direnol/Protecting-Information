@@ -11,22 +11,26 @@
 #include <string>
 #include <openssl/md5.h>
 
-using string = std::string;
+using std::string;
 
 class Signature {
+protected:
     Operation op;
-
+    uint8_t hash;
+    MD5_CTX md5_ctx;
 public:
-    struct RSA_data {
-        string h;
-        int64_t S[MD5_DIGEST_LENGTH];
-        int64_t D;
-        int64_t N;
-    };
+    virtual uint64_t Sign(int64_t m) = 0;
 
-    auto EnRsa(string data) -> RSA_data;
+    virtual uint64_t Sign(std::istream in, std::ostream out) = 0;
 
-    bool DeRsa(RSA_data data);
+    void Update(uint8_t *text, size_t n);
+
+    void Clear();
+
+    virtual uint64_t Unsign(int64_t m) = 0;
+
+    virtual uint64_t Unsign(std::istream in, std::ostream out) = 0;
+
 };
 
 

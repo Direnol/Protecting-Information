@@ -11,19 +11,19 @@
 class shamir : public Encrypt {
     int64_t C, D, P;
 public:
-    shamir(int64_t C, int64_t D, int64_t P);
+    shamir(const std::string &in_file, const std::string &out_file, int64_t C, int64_t D, int64_t P);
 
-    shamir();
+    shamir(const std::string &in_file, const std::string &out_file);
 
-    explicit shamir(int64_t P);
+    explicit shamir(const std::string &in_file, const std::string &out_file, int64_t P);
 
     int64_t Encode(int64_t m) override;
 
-    void Encode(std::istream &in, std::ostream &out) override;
+    void Encode() override;
 
     int64_t Decode(int64_t m) override;
 
-    void Decode(std::istream &in, std::ostream &out) override;
+    void Decode() override;
 
     void print() override;
 
