@@ -2,7 +2,7 @@
 // Created by direnol on 01.10.18.
 //
 
-#include "shamir.h"
+#include <shamir.h>
 
 shamir::shamir(const std::string &in_file, const std::string &out_file, int64_t C, int64_t D, int64_t P)
         : Encrypt(in_file, out_file), C(C), D(D), P(P)
@@ -35,13 +35,11 @@ int64_t shamir::Encode(int64_t m)
 
 void shamir::Encode()
 {
-    std::ifstream in(this->in_file);
-    std::ofstream out(this->in_file);
-
-    int8_t m;
-    out << C << D << P;
-    while (in >> m) {
-        out << Encode(m);
+    auto[in, out] = open();
+    int64_t m;
+    while (in.read(reinterpret_cast<char *>(&m), sizeof(m))) {
+        auto e = Encode(m);
+        out.write(reinterpret_cast<const char *>(&e), sizeof(e));
     }
 }
 
@@ -52,18 +50,28 @@ int64_t shamir::Decode(int64_t m)
 
 void shamir::Decode()
 {
-    std::ifstream in(this->in_file);
-    std::ofstream out(this->in_file);
-
-
-    int64_t m;
-    in >> C >> D >> P;
-    while (in >> m) {
-        out << Decode(m);
+    auto[in, out] = open();
+    int64_t e;
+    while (in.read(reinterpret_cast<char *>(&e), sizeof(e))) {
+        auto m = Decode(e);
+        out.write(reinterpret_cast<const char *>(&m), sizeof(m));
     }
 }
 
 void shamir::print()
 {
     std::cout << "Shamir: C:" << C << " D:" << D << " P:" << P << std::endl;
+}
+
+void shamir::DecodeM()
+{
+    auto[in, out] = open();
+    _decode(in, out);
+}
+
+void shamir::EncodeM()
+{
+    auto[in, out] = open();
+    _encode(in, out);
+
 }

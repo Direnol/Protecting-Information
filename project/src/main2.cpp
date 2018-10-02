@@ -4,36 +4,71 @@
 
 #include <Encrypt.h>
 #include <rsa.h>
+#include <el_gamal.h>
+#include <vernam.h>
+#include <shamir.h>
 
-using std::cout, std::endl,
-std::cin;
+using std::cout;
+using std::endl;
+using std::string;
 
 int main()
 {
-    std::string inf = "input";
-    std::string ouf = "ouf";
-    std::string out = "out";
-    rsa r(inf, ouf);
+    string in = "input";
+
+    string our = "ouf_rsa";
+    string out_rsa = "out_rsa";
+
+    rsa r(in, our);
     r.print();
-
     r.Encode();
-
-    r.setIn_file(ouf);
-    r.setOut_file(out);
-
+    r.setIn_file(our);
+    r.setOut_file(out_rsa);
     r.Decode();
-//    cout << r.Decode(r.Encode(12)) << endl;
-//    el_gamal eg;
-//    eg.print();
-//    cout << eg.Decode(eg.Encode(12)) << endl;
-//    vernam v;
-//    v.print();
-//    cout << v.Decode(v.Encode(12)) << endl;
-//    shamir shamir1;
-//    shamir shamir2(shamir1.getP());
-//    shamir1.print();
-//    shamir2.print();
-//    cout << shamir2.Decode(shamir1.Decode(shamir2.Encode(shamir1.Encode(12)))) << endl;
+    cout << r.Decode(r.Encode(12)) << endl;
+
+    string oul = "oul";
+    string out_el = "out_el";
+
+    el_gamal eg(in, oul);
+    eg.print();
+    eg.Encode();
+    eg.setIn_file(oul);
+    eg.setOut_file(out_el);
+    eg.Decode();
+    cout << eg.Decode(eg.Encode(12)) << endl;
+
+    string ouv = "ouv";
+    string out_v = "out_vern";
+    vernam v(in, ouv);
+    v.print();
+    v.Encode();
+    v.setIn_file(ouv);
+    v.setOut_file(out_v);
+    v.Decode();
+    cout << v.Decode(v.Encode(12)) << endl;
+
+    string sh1 = "sh1";
+    string sh2 = "sh2";
+    string sh3 = "sh3";
+    string out_sh = "out_sham";
+
+    shamir shamir1(in, sh1);
+    shamir shamir2(sh1, sh2, shamir1.getP());
+    shamir1.print();
+    shamir2.print();
+
+    shamir1.EncodeM();
+    shamir2.Encode();
+    shamir1.setIn_file(sh2);
+    shamir1.setOut_file(sh3);
+    shamir1.Decode();
+
+    shamir2.setIn_file(sh3);
+    shamir2.setOut_file(out_sh);
+    shamir2.DecodeM();
+
+    cout << shamir2.Decode(shamir1.Decode(shamir2.Encode(shamir1.Encode(12)))) << endl;
 
     return 0;
 }

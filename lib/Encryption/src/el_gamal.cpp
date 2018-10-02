@@ -32,14 +32,16 @@ int64_t el_gamal::Encode(int64_t m)
 
 void el_gamal::Encode()
 {
-    std::ifstream in(this->in_file);
-    std::ofstream out(this->in_file);
+    auto[in, out] = open();
 
-    out << P << Q << g << C << D << r << k;
-    int8_t m;
-    while (in >> m) {
-        out << Encode(m);
-    }
+    out.write(reinterpret_cast<const char *>(&P), sizeof(P));
+    out.write(reinterpret_cast<const char *>(&Q), sizeof(P));
+    out.write(reinterpret_cast<const char *>(&C), sizeof(P));
+    out.write(reinterpret_cast<const char *>(&D), sizeof(P));
+    out.write(reinterpret_cast<const char *>(&r), sizeof(P));
+    out.write(reinterpret_cast<const char *>(&k), sizeof(P));
+
+    _encode(in, out);
 }
 
 int64_t el_gamal::Decode(int64_t m)
@@ -49,14 +51,15 @@ int64_t el_gamal::Decode(int64_t m)
 
 void el_gamal::Decode()
 {
-    std::ifstream in(this->in_file);
-    std::ofstream out(this->in_file);
+    auto[in, out] = open();
 
-    in >> P >> Q >> g >> C >> D >> r >> k;
-    int64_t m;
-    while (in >> m) {
-        out << Encode(m);
-    }
+    in.read(reinterpret_cast<char *>(&P), sizeof(P));
+    in.read(reinterpret_cast<char *>(&Q), sizeof(P));
+    in.read(reinterpret_cast<char *>(&C), sizeof(P));
+    in.read(reinterpret_cast<char *>(&D), sizeof(P));
+    in.read(reinterpret_cast<char *>(&r), sizeof(P));
+    in.read(reinterpret_cast<char *>(&k), sizeof(P));
+    _decode(in, out);
 }
 
 void el_gamal::print()

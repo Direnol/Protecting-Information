@@ -36,41 +36,28 @@ int64_t rsa::Decode(int64_t m)
 
 void rsa::Encode()
 {
-    std::ifstream in(this->in_file, std::ifstream::binary);
-    std::ofstream out(this->out_file, std::ofstream::binary);
-
-    int8_t m;
+    auto[in, out] = std::move(open());
     out.write(reinterpret_cast<const char *>(&P), sizeof(P));
     out.write(reinterpret_cast<const char *>(&Q), sizeof(P));
     out.write(reinterpret_cast<const char *>(&C), sizeof(P));
     out.write(reinterpret_cast<const char *>(&D), sizeof(P));
     out.write(reinterpret_cast<const char *>(&N), sizeof(P));
     out.write(reinterpret_cast<const char *>(&F), sizeof(P));
-    while (!in.eof()) {
-        in.read(reinterpret_cast<char *>(&m), sizeof(m));
-        auto e = Encode(m);
-        out.write(reinterpret_cast<const char *>(&e), sizeof(e));
-    }
+    _encode(in, out);
 }
 
 
 void rsa::Decode()
 {
-    std::ifstream in(this->in_file, std::ifstream::binary);
-    std::ofstream out(this->out_file, std::ofstream::binary);
-
+    auto[in, out] = open();
     in.read(reinterpret_cast<char *>(&P), sizeof(P));
     in.read(reinterpret_cast<char *>(&Q), sizeof(P));
     in.read(reinterpret_cast<char *>(&C), sizeof(P));
     in.read(reinterpret_cast<char *>(&D), sizeof(P));
     in.read(reinterpret_cast<char *>(&N), sizeof(P));
     in.read(reinterpret_cast<char *>(&F), sizeof(P));
-    int64_t e;
-    while (!in.eof()) {
-        in.read(reinterpret_cast<char *>(&e), sizeof(e));
-        auto m = Encode(e);
-        out << (char) m;
-    }
+
+    _decode(in, out);
 }
 
 void rsa::print()

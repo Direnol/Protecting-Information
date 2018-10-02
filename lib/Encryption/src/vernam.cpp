@@ -12,14 +12,10 @@ int64_t vernam::Encode(int64_t m)
 
 void vernam::Encode()
 {
-    std::ifstream in(this->in_file);
-    std::ofstream out(this->in_file);
+    auto[in, out] = open();
 
-    int8_t m;
-    in >> k;
-    while (in >> m) {
-        out << Encode(m);
-    }
+    out.write(reinterpret_cast<const char *>(&k), sizeof(k));
+    _encode(in, out);
 }
 
 int64_t vernam::Decode(int64_t m)
@@ -29,14 +25,10 @@ int64_t vernam::Decode(int64_t m)
 
 void vernam::Decode()
 {
-    std::ifstream in(this->in_file);
-    std::ofstream out(this->in_file);
+    auto[in, out] = open();
 
-    in >> k;
-    int64_t m;
-    while (in >> m) {
-        out << Decode(m);
-    }
+    in.read(reinterpret_cast<char *>(&k), sizeof(k));
+    _decode(in, out);
 }
 
 vernam::vernam(const std::string &in_file, const std::string &out_file) : Encrypt(in_file, out_file)

@@ -17,12 +17,22 @@ protected:
     Operation op;
     std::string in_file;
     std::string out_file;
+
+    void _encode(std::ifstream &in, std::ofstream &out);
+
+    void _decode(std::ifstream &in, std::ofstream &out);
+
+
+    pair<std::ifstream, std::ofstream> open();
+
 public:
     Encrypt(const std::string &in_file, const std::string &out_file);
 
     void setIn_file(const std::string &in_file);
 
     void setOut_file(const std::string &out_file);
+
+    void Swap_files();
 
     virtual int64_t Encode(int64_t m) = 0;
 
