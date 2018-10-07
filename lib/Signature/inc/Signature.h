@@ -1,7 +1,3 @@
-//
-// Created by stanley on 09.09.18.
-//
-
 #ifndef CLION_SIGNATURE_H
 #define CLION_SIGNATURE_H
 
@@ -10,28 +6,34 @@
 #include <Operation.h>
 #include <string>
 #include <openssl/md5.h>
+#include <fstream>
+#include <iostream>
+#include <utility>
 
-using std::string;
 
-class Signature {
-protected:
-    Operation op;
-    uint8_t hash;
-    MD5_CTX md5_ctx;
-public:
-    virtual uint64_t Sign(int64_t m) = 0;
+namespace Signature {
+    class Signature {
+    protected:
+        std::string input_file_name;
+        std::string output_file_name;
+        std::ifstream input_stream;
+        std::ofstream output_stream;
+        std::string text;
+        Operation op;
+        uint64_t hash;
+        MD5_CTX md5_ctx;
 
-    virtual uint64_t Sign(std::istream in, std::ostream out) = 0;
+        void ReadText();
+        uint64_t TakingHash();
+    public:
+        Signature(std::string in_f, std::string out_f);
 
-    void Update(uint8_t *text, size_t n);
+        virtual uint64_t Sign() = 0;
 
-    void Clear();
+        virtual uint64_t Unsign() = 0;
 
-    virtual uint64_t Unsign(int64_t m) = 0;
-
-    virtual uint64_t Unsign(std::istream in, std::ostream out) = 0;
-
-};
-
+        virtual void Print() = 0;
+    };
+}
 
 #endif //CLION_SIGNATURE_H

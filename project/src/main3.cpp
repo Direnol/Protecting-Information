@@ -1,9 +1,10 @@
-
+#include <RSA.h>
 
 int main() {
-//    Signature sing;
+    std::string input_file = "input";
+    std::string output_file = "RSA_sign_output";
+    Signature::RSA* signature = new Signature::RSA(input_file, output_file);
 //    Operation op;
 //    int64_t m = 123;
-//    auto pq = op.get_simple_pair();
     return 0;
 }

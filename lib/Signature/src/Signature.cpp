@@ -1,7 +1,3 @@
-//
-// Created by stanley on 09.09.18.
-//
-
 #include <Signature.h>
 
 //auto Signature::EnRsa(string data) -> Signature::RSA_data
@@ -38,12 +34,26 @@
 //    return true;
 //}
 
-void Signature::Update(uint8_t *text, size_t n)
-{
-
+uint64_t Signature::Signature::TakingHash() {
+    return 0;
 }
 
-void Signature::Clear()
-{
-    md5_ctx = {};
+Signature::Signature::Signature(std::string in_f, std::string out_f) {
+    this->input_file_name = std::move(in_f);
+    this->output_file_name = std::move(out_f);
+    try {
+        this->input_stream.open(this->input_file_name, std::ios_base::binary);
+        this->output_stream.open(this->output_file_name, std::ios_base::binary);
+    } catch (std::runtime_error& e) {
+        std::cerr << e.what();
+    }
+    this->ReadText();
+}
+
+void Signature::Signature::ReadText() {
+    if (this->input_stream.is_open()) {
+        while (!this->input_stream.eof()) {
+            this->input_stream >> this->text;
+        }
+    }
 }

@@ -1,3 +1,5 @@
+#include <utility>
+
 //
 // Created by direnol on 02.10.18.
 //
@@ -7,13 +9,19 @@
 
 #include <Signature.h>
 
-class RSA : public Signature {
-private:
+namespace Signature {
+    class RSA : public Signature {
+    private:
+        int64_t P, Q, N, F, c, d;
+    public:
+        RSA(std::string in_f, std::string out_f);
 
-public:
-    uint64_t Sign();
+        uint64_t Sign() override;
 
-    uint64_t Unsign();
-};
+        uint64_t Unsign() override;
+
+        void Print() override;
+    };
+}
 
 #endif //PROTECTION_INFORMATION_RSA_H
