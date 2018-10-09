@@ -41,11 +41,11 @@ public:
 
     virtual int64_t Encode(int64_t m) = 0;
 
-    virtual void Encode() = 0;
+    void Encode();
 
     virtual int64_t Decode(int64_t m) = 0;
 
-    virtual void Decode() = 0;
+    void Decode();
 
     virtual void print() = 0;
 };

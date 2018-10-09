@@ -27,6 +27,11 @@ public:
     int64_t Decode(int64_t m) override;
 
     void Decode() override;
+
+protected:
+    void write_key() override;
+
+    void read_key() override;
 };
 
 

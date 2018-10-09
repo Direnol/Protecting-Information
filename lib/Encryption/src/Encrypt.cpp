@@ -46,3 +46,19 @@ pair<std::ifstream, std::ofstream> Encrypt::open()
     std::ofstream out(this->out_file, std::ofstream::binary);
     return std::make_pair(std::move(in), std::move(out));
 }
+
+void Encrypt::Encode()
+{
+    auto[in, out] = open();
+
+    write_key();
+    _encode(in, out);
+}
+
+void Encrypt::Decode()
+{
+    auto[in, out] = open();
+
+    read_key();
+    _decode(in, out);
+}
