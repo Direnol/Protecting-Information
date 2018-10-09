@@ -36,30 +36,26 @@ int64_t rsa::Decode(int64_t m)
     return op.powmod(m, C, N);
 }
 
-void rsa::Encode()
+void rsa::write_key()
 {
-    auto[in, out] = open();
+    std::ofstream out(this->key);
     out.write(reinterpret_cast<const char *>(&P), sizeof(P));
     out.write(reinterpret_cast<const char *>(&Q), sizeof(P));
     out.write(reinterpret_cast<const char *>(&C), sizeof(P));
     out.write(reinterpret_cast<const char *>(&D), sizeof(P));
     out.write(reinterpret_cast<const char *>(&N), sizeof(P));
     out.write(reinterpret_cast<const char *>(&F), sizeof(P));
-    _encode(in, out);
 }
 
-
-void rsa::Decode()
+void rsa::read_key()
 {
-    auto[in, out] = open();
+    std::ifstream in(this->key);
     in.read(reinterpret_cast<char *>(&P), sizeof(P));
     in.read(reinterpret_cast<char *>(&Q), sizeof(P));
     in.read(reinterpret_cast<char *>(&C), sizeof(P));
     in.read(reinterpret_cast<char *>(&D), sizeof(P));
     in.read(reinterpret_cast<char *>(&N), sizeof(P));
     in.read(reinterpret_cast<char *>(&F), sizeof(P));
-
-    _decode(in, out);
 }
 
 void rsa::print()

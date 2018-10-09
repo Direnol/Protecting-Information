@@ -48,11 +48,25 @@ void el_gamal::print()
 
 void el_gamal::write_key()
 {
-
+    std::ofstream out(this->key);
+    out.write(reinterpret_cast<const char *>(&P), sizeof(P));
+    out.write(reinterpret_cast<const char *>(&Q), sizeof(P));
+    out.write(reinterpret_cast<const char *>(&C), sizeof(P));
+    out.write(reinterpret_cast<const char *>(&D), sizeof(P));
+    out.write(reinterpret_cast<const char *>(&k), sizeof(P));
+    out.write(reinterpret_cast<const char *>(&r), sizeof(P));
+    out.write(reinterpret_cast<const char *>(&g), sizeof(P));
 
 }
 
 void el_gamal::read_key()
 {
-
+    std::ifstream in(this->key);
+    in.read(reinterpret_cast<char *>(&P), sizeof(P));
+    in.read(reinterpret_cast<char *>(&Q), sizeof(P));
+    in.read(reinterpret_cast<char *>(&C), sizeof(P));
+    in.read(reinterpret_cast<char *>(&D), sizeof(P));
+    in.read(reinterpret_cast<char *>(&k), sizeof(P));
+    in.read(reinterpret_cast<char *>(&r), sizeof(P));
+    in.read(reinterpret_cast<char *>(&g), sizeof(P));
 }

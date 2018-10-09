@@ -25,6 +25,11 @@ public:
 
     void print() override;
 
+protected:
+    void write_key() override;
+
+    void read_key() override;
+
 };
 
 
