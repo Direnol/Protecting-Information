@@ -4,7 +4,9 @@
 
 #include "el_gamal.h"
 
-el_gamal::el_gamal(const std::string &in_file, const std::string &out_file) : Encrypt(in_file, out_file)
+el_gamal::el_gamal(const std::string &in_file, const std::string &out_file, const std::string &key) : Encrypt(in_file,
+                                                                                                              out_file,
+                                                                                                              key)
 {
     auto[p, q] = op.get_simple_pair();
     P = p;
@@ -16,8 +18,9 @@ el_gamal::el_gamal(const std::string &in_file, const std::string &out_file) : En
     D = op.powmod(g, C, P);
 }
 
-el_gamal::el_gamal(const std::string &in_file, const std::string &out_file, int64_t P, int64_t Q, int64_t C,
-                   int64_t g) : Encrypt(in_file, out_file), P(P), Q(Q), C(C), g(g)
+el_gamal::el_gamal(const std::string &in_file, const std::string &out_file, const std::string &key, int64_t P,
+                   int64_t Q,
+                   int64_t C, int64_t g) : Encrypt(in_file, out_file, key), P(P), Q(Q), C(C), g(g)
 {
     k = 1 + op.getRand() % (P - 2);
     r = op.powmod(g, k, P);

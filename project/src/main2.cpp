@@ -19,7 +19,7 @@ int main()
     string our = "ouf_rsa";
     string out_rsa = "out_rsa";
 
-    rsa r(in, our);
+    rsa r(in, our, "rsa_key");
     r.print();
     r.Encode();
     r.setIn_file(our);
@@ -30,7 +30,7 @@ int main()
     string oul = "oul";
     string out_el = "out_el";
 
-    el_gamal eg(in, oul);
+    el_gamal eg(in, oul, "el_key");
     eg.print();
     eg.Encode();
     eg.setIn_file(oul);
@@ -40,7 +40,7 @@ int main()
 
     string ouv = "ouv";
     string out_v = "out_vern";
-    vernam v(in, ouv);
+    vernam v(in, ouv, "ver_key");
     v.print();
     v.Encode();
     v.setIn_file(ouv);
@@ -53,8 +53,8 @@ int main()
     string sh3 = "sh3";
     string out_sh = "out_sham";
 
-    shamir shamir1(in, sh1);
-    shamir shamir2(sh1, sh2, shamir1.getP());
+    shamir shamir1(in, sh1, "sh1_key");
+    shamir shamir2(sh1, sh2, "sh2_key2", shamir1.getP());
     shamir1.print();
     shamir2.print();
 

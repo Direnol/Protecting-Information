@@ -4,11 +4,13 @@
 
 #include <shamir.h>
 
-shamir::shamir(const std::string &in_file, const std::string &out_file, int64_t C, int64_t D, int64_t P)
-        : Encrypt(in_file, out_file), C(C), D(D), P(P)
+shamir::shamir(const std::string &in_file, const std::string &out_file, const std::string &key, int64_t C,
+               int64_t D, int64_t P)
+        : Encrypt(in_file, out_file, key), C(C), D(D), P(P)
 {}
 
-shamir::shamir(const std::string &in_file, const std::string &out_file) : Encrypt(in_file, out_file)
+shamir::shamir(const std::string &in_file, const std::string &out_file, const std::string &key) : Encrypt(in_file,
+                                                                                                          out_file, key)
 {
     P = op.getQ();
     auto[c, d] = op.getCD(0, P);
@@ -16,7 +18,8 @@ shamir::shamir(const std::string &in_file, const std::string &out_file) : Encryp
     D = d;
 }
 
-shamir::shamir(const std::string &in_file, const std::string &out_file, int64_t P) : Encrypt(in_file, out_file), P(P)
+shamir::shamir(const std::string &in_file, const std::string &out_file, int64_t P) : Encrypt(in_file, out_file,
+                                                                                             <#initializer#>), P(P)
 {
     auto[c, d] = op.getCD(0, P);
     C = c;

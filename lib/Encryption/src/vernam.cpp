@@ -31,12 +31,15 @@ void vernam::Decode()
     _decode(in, out);
 }
 
-vernam::vernam(const std::string &in_file, const std::string &out_file) : Encrypt(in_file, out_file)
+vernam::vernam(const std::string &in_file, const std::string &out_file, const std::string &key) : Encrypt(in_file,
+                                                                                                          out_file, key)
 {
     k = op.getQ();
 }
 
-vernam::vernam(const std::string &in_file, const std::string &out_file, int64_t k) : Encrypt(in_file, out_file), k(k)
+vernam::vernam(const std::string &in_file, const std::string &out_file, const std::string &key, int64_t k)
+        : Encrypt(in_file, out_file,
+                  key), k(k)
 {}
 
 void vernam::print()

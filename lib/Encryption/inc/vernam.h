@@ -14,9 +14,9 @@ class vernam : public Encrypt {
 public:
     void print() override;
 
-    explicit vernam(const std::string &in_file, const std::string &out_file, int64_t k);
+    explicit vernam(const std::string &in_file, const std::string &out_file, const std::string &key, int64_t k);
 
-    vernam(const std::string &in_file, const std::string &out_file);
+    vernam(const std::string &in_file, const std::string &out_file, const std::string &key);
 
     int64_t Encode(int64_t m) override;
 

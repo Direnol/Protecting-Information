@@ -4,7 +4,8 @@
 
 #include <rsa.h>
 
-rsa::rsa(const std::string &in_file, const std::string &out_file) : Encrypt(in_file, out_file)
+rsa::rsa(const std::string &in_file, const std::string &out_file, const std::string &key) : Encrypt(in_file, out_file,
+                                                                                                    key)
 {
     auto[p, q] = op.get_simple_pair();
     P = p;
@@ -16,8 +17,9 @@ rsa::rsa(const std::string &in_file, const std::string &out_file) : Encrypt(in_f
     this->C = C;
 }
 
-rsa::rsa(const std::string &in_file, const std::string &out_file, int64_t C, int64_t D, int64_t P, int64_t Q)
-        : Encrypt(in_file, out_file), C(C), D(D), Q(Q), P(P)
+rsa::rsa(const std::string &in_file, const std::string &out_file, const std::string &key, int64_t C, int64_t D,
+         int64_t P, int64_t Q)
+        : Encrypt(in_file, out_file, key), C(C), D(D), Q(Q), P(P)
 {
     N = P * Q;
     F = (P - 1) * (Q - 1);
@@ -36,7 +38,7 @@ int64_t rsa::Decode(int64_t m)
 
 void rsa::Encode()
 {
-    auto[in, out] = std::move(open());
+    auto[in, out] = open();
     out.write(reinterpret_cast<const char *>(&P), sizeof(P));
     out.write(reinterpret_cast<const char *>(&Q), sizeof(P));
     out.write(reinterpret_cast<const char *>(&C), sizeof(P));

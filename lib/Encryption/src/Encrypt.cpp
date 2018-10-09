@@ -4,8 +4,8 @@
 
 #include <Encrypt.h>
 
-Encrypt::Encrypt(const std::__cxx11::basic_string<char> &in_file, const std::__cxx11::basic_string<char> &out_file)
-        : in_file(in_file), out_file(out_file)
+Encrypt::Encrypt(const std::string &in_file, const std::string &out_file, const std::string &key)
+        : in_file(in_file), out_file(out_file), key(key)
 {}
 
 void Encrypt::setIn_file(const std::string &in_file)

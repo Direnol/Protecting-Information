@@ -11,9 +11,10 @@
 class shamir : public Encrypt {
     int64_t C, D, P;
 public:
-    shamir(const std::string &in_file, const std::string &out_file, int64_t C, int64_t D, int64_t P);
+    shamir(const std::string &in_file, const std::string &out_file, const std::string &key, int64_t C,
+           int64_t D, int64_t P);
 
-    shamir(const std::string &in_file, const std::string &out_file);
+    shamir(const std::string &in_file, const std::string &out_file, const std::string &key);
 
     explicit shamir(const std::string &in_file, const std::string &out_file, int64_t P);
 

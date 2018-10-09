@@ -17,16 +17,21 @@ protected:
     Operation op;
     std::string in_file;
     std::string out_file;
+    std::string key;
 
     void _encode(std::ifstream &in, std::ofstream &out);
 
     void _decode(std::ifstream &in, std::ofstream &out);
 
+    virtual void write_key() = 0;
+
+    virtual void read_key() = 0;
+
 
     pair<std::ifstream, std::ofstream> open();
 
 public:
-    Encrypt(const std::string &in_file, const std::string &out_file);
+    Encrypt(const std::string &in_file, const std::string &out_file, const std::string &key);
 
     void setIn_file(const std::string &in_file);
 
