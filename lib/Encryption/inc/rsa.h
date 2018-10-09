@@ -15,19 +15,22 @@ public:
     rsa(const std::string &in_file, const std::string &out_file, const std::string &key, int64_t C, int64_t D,
         int64_t P, int64_t Q);
 
-    int64_t Encode(int64_t m) override;
+    void print() override;
 
+    int64_t Encode(int64_t m) override;
 
     int64_t Decode(int64_t m) override;
 
-
-    void print() override;
 
 protected:
     void write_key() override;
 
     void read_key() override;
 
+public:
+    void Encode() override;
+
+    void Decode() override;
 };
 
 

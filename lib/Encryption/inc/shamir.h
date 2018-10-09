@@ -16,21 +16,26 @@ public:
 
     shamir(const std::string &in_file, const std::string &out_file, const std::string &key);
 
-    explicit shamir(const std::string &in_file, const std::string &out_file, int64_t P);
+    explicit shamir(const std::string &in_file, const std::string &out_file, const std::string &key, int64_t P);
 
     int64_t Encode(int64_t m) override;
 
 
-    void EncodeM();
-
     int64_t Decode(int64_t m) override;
 
 
-    void DecodeM();
+    void Encode() override;
+
+    void Decode() override;
 
     void print() override;
 
     int64_t getP() const;
+
+protected:
+    void write_key() override;
+
+    void read_key() override;
 };
 
 

@@ -19,8 +19,9 @@ shamir::shamir(const std::string &in_file, const std::string &out_file, const st
     D = d;
 }
 
-shamir::shamir(const std::string &in_file, const std::string &out_file, int64_t P) : Encrypt(in_file, out_file,
-                                                                                             key), P(P)
+shamir::shamir(const std::string &in_file, const std::string &out_file, const std::string &key, int64_t P)
+        : Encrypt(in_file, out_file,
+                  key), P(P)
 {
     auto[c, d] = op.getCD(0, P);
     C = c;
@@ -37,29 +38,9 @@ int64_t shamir::Encode(int64_t m)
     return op.powmod(m, D, P);
 }
 
-void shamir::Encode()
-{
-    auto[in, out] = open();
-    int64_t m;
-    while (in.read(reinterpret_cast<char *>(&m), sizeof(m))) {
-        auto e = Encode(m);
-        out.write(reinterpret_cast<const char *>(&e), sizeof(e));
-    }
-}
-
 int64_t shamir::Decode(int64_t m)
 {
     return op.powmod(m, C, P);
-}
-
-void shamir::Decode()
-{
-    auto[in, out] = open();
-    int64_t e;
-    while (in.read(reinterpret_cast<char *>(&e), sizeof(e))) {
-        auto m = Decode(e);
-        out.write(reinterpret_cast<const char *>(&m), sizeof(m));
-    }
 }
 
 void shamir::print()
@@ -67,15 +48,28 @@ void shamir::print()
     std::cout << "Shamir: C:" << C << " D:" << D << " P:" << P << std::endl;
 }
 
-void shamir::DecodeM()
+void shamir::write_key()
 {
-    auto[in, out] = open();
-    _decode(in, out);
+    std::ofstream out(this->key);
+    out.write(reinterpret_cast<const char *>(&P), sizeof(P));
+    out.write(reinterpret_cast<const char *>(&C), sizeof(P));
+    out.write(reinterpret_cast<const char *>(&D), sizeof(P));
 }
 
-void shamir::EncodeM()
+void shamir::read_key()
 {
-    auto[in, out] = open();
-    _encode(in, out);
+    std::ifstream in(this->key);
+    in.read(reinterpret_cast<char *>(&P), sizeof(P));
+    in.read(reinterpret_cast<char *>(&C), sizeof(P));
+    in.read(reinterpret_cast<char *>(&D), sizeof(P));
+}
 
+void shamir::Encode()
+{
+    Encrypt::Encode();
+}
+
+void shamir::Decode()
+{
+    Encrypt::Decode();
 }

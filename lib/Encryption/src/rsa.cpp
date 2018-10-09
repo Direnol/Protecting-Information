@@ -64,3 +64,13 @@ void rsa::print()
               << " C:" << C << " D:" << D << " F:" << F << std::endl;
 
 }
+
+void rsa::Encode()
+{
+    Encrypt::Encode();
+}
+
+void rsa::Decode()
+{
+    Encrypt::Decode();
+}

@@ -16,6 +16,10 @@ public:
 
     explicit vernam(const std::string &in_file, const std::string &out_file, const std::string &key, int64_t k);
 
+    void Encode() override;
+
+    void Decode() override;
+
     vernam(const std::string &in_file, const std::string &out_file, const std::string &key);
 
     int64_t Encode(int64_t m) override;

@@ -70,3 +70,13 @@ void el_gamal::read_key()
     in.read(reinterpret_cast<char *>(&r), sizeof(P));
     in.read(reinterpret_cast<char *>(&g), sizeof(P));
 }
+
+void el_gamal::Encode()
+{
+    Encrypt::Encode();
+}
+
+void el_gamal::Decode()
+{
+    Encrypt::Decode();
+}

@@ -53,12 +53,12 @@ int main()
     string sh3 = "sh3";
     string out_sh = "out_sham";
 
-    shamir shamir1(in, sh1, "sh1_key", <#initializer#>);
-    shamir shamir2(sh1, sh2, "sh2_key2", shamir1.getP());
+    shamir shamir1(in, sh1, "sh1_key");
+    shamir shamir2(sh1, sh2, "sh2_key", shamir1.getP());
     shamir1.print();
     shamir2.print();
 
-    shamir1.EncodeM();
+    shamir1.Encode();
     shamir2.Encode();
     shamir1.setIn_file(sh2);
     shamir1.setOut_file(sh3);
@@ -66,7 +66,7 @@ int main()
 
     shamir2.setIn_file(sh3);
     shamir2.setOut_file(out_sh);
-    shamir2.DecodeM();
+    shamir2.Decode();
 
     cout << shamir2.Decode(shamir1.Decode(shamir2.Encode(shamir1.Encode(12)))) << endl;
 
