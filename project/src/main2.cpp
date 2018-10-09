@@ -53,7 +53,7 @@ int main()
     string sh3 = "sh3";
     string out_sh = "out_sham";
 
-    shamir shamir1(in, sh1, "sh1_key");
+    shamir shamir1(in, sh1, "sh1_key", <#initializer#>);
     shamir shamir2(sh1, sh2, "sh2_key2", shamir1.getP());
     shamir1.print();
     shamir2.print();

@@ -17,11 +17,9 @@ public:
 
     int64_t Encode(int64_t m) override;
 
-    void Encode() override;
 
     int64_t Decode(int64_t m) override;
 
-    void Decode() override;
 
     void print() override;
 
