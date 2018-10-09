@@ -20,12 +20,11 @@ public:
 
     int64_t Encode(int64_t m) override;
 
-    void Encode() override;
+    void write_key() override;
 
     int64_t Decode(int64_t m) override;
 
-    void Decode() override;
+    void read_key() override;
 };
-
 
 #endif //PROTECTION_INFORMATION_VERNAM_H
