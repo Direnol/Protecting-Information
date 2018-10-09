@@ -28,6 +28,9 @@ public:
 
     void Decode() override;
 
+    void EncodeM();
+
+    void DecodeM();
     void print() override;
 
     int64_t getP() const;

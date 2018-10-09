@@ -58,7 +58,7 @@ int main()
     shamir1.print();
     shamir2.print();
 
-    shamir1.Encode();
+    shamir1.EncodeM();
     shamir2.Encode();
     shamir1.setIn_file(sh2);
     shamir1.setOut_file(sh3);
@@ -66,7 +66,7 @@ int main()
 
     shamir2.setIn_file(sh3);
     shamir2.setOut_file(out_sh);
-    shamir2.Decode();
+    shamir2.DecodeM();
 
     cout << shamir2.Decode(shamir1.Decode(shamir2.Encode(shamir1.Encode(12)))) << endl;
 

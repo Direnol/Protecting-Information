@@ -38,9 +38,29 @@ int64_t shamir::Encode(int64_t m)
     return op.powmod(m, D, P);
 }
 
+void shamir::Encode()
+{
+    auto[in, out] = open();
+    int64_t m;
+    while (in.read(reinterpret_cast<char *>(&m), sizeof(m))) {
+        auto e = Encode(m);
+        out.write(reinterpret_cast<const char *>(&e), sizeof(e));
+    }
+}
+
 int64_t shamir::Decode(int64_t m)
 {
     return op.powmod(m, C, P);
+}
+
+void shamir::Decode()
+{
+    auto[in, out] = open();
+    int64_t e;
+    while (in.read(reinterpret_cast<char *>(&e), sizeof(e))) {
+        auto m = Decode(e);
+        out.write(reinterpret_cast<const char *>(&m), sizeof(m));
+    }
 }
 
 void shamir::print()
@@ -64,12 +84,12 @@ void shamir::read_key()
     in.read(reinterpret_cast<char *>(&D), sizeof(P));
 }
 
-void shamir::Encode()
-{
-    Encrypt::Encode();
-}
-
-void shamir::Decode()
+void shamir::DecodeM()
 {
     Encrypt::Decode();
+}
+
+void shamir::EncodeM()
+{
+    Encrypt::Encode();
 }
