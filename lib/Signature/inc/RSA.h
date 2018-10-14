@@ -8,17 +8,20 @@
 #define PROTECTION_INFORMATION_RSA_H
 
 #include <Signature.h>
+#include <cstring>
 
 namespace Signature {
     class RSA : public Signature {
     private:
         int64_t P, Q, N, F, c, d;
+        void WriteSign() override;
+        void InitFromSignFile() override;
     public:
         RSA(std::string in_f, std::string out_f);
 
-        uint64_t Sign() override;
+        void Sign() override;
 
-        uint64_t Unsign() override;
+        bool TestSign() override;
 
         void Print() override;
     };

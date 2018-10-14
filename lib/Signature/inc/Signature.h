@@ -15,22 +15,26 @@ namespace Signature {
     class Signature {
     protected:
         std::string input_file_name;
-        std::string output_file_name;
+        std::string sign_file_name;
         std::ifstream input_stream;
-        std::ofstream output_stream;
+        std::fstream sign_stream;
         std::string text;
         Operation op;
         uint64_t hash;
         MD5_CTX md5_ctx;
 
+        int64_t sign;
+
         void ReadText();
+        virtual void WriteSign() = 0;
+        virtual void InitFromSignFile() = 0;
         uint64_t TakingHash();
     public:
         Signature(std::string in_f, std::string out_f);
 
-        virtual uint64_t Sign() = 0;
+        virtual void Sign() = 0;
 
-        virtual uint64_t Unsign() = 0;
+        virtual bool TestSign() = 0;
 
         virtual void Print() = 0;
     };
