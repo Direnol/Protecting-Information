@@ -42,6 +42,7 @@ void shamir::Encode()
 {
     auto[in, out] = open();
     int64_t m;
+    write_key();
     while (in.read(reinterpret_cast<char *>(&m), sizeof(m))) {
         auto e = Encode(m);
         out.write(reinterpret_cast<const char *>(&e), sizeof(e));
@@ -57,6 +58,7 @@ void shamir::Decode()
 {
     auto[in, out] = open();
     int64_t e;
+    read_key();
     while (in.read(reinterpret_cast<char *>(&e), sizeof(e))) {
         auto m = Decode(e);
         out.write(reinterpret_cast<const char *>(&m), sizeof(m));

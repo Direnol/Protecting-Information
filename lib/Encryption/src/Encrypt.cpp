@@ -26,7 +26,7 @@ void Encrypt::Swap_files()
 void Encrypt::_encode(std::ifstream &in, std::ofstream &out)
 {
     int8_t m;
-    while (in >> m) {
+    while (in.read(reinterpret_cast<char *>(&m), sizeof m)) {
         auto e = Encode(m);
         out.write(reinterpret_cast<const char *>(&e), sizeof(e));
     }
