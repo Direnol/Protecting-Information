@@ -132,7 +132,7 @@ pair<int64_t, int64_t> Operation::getCD(int64_t C, int64_t P)
     if (C == 0) C = 1 + this->getRand() % (P - 1);
     auto ans = evklid(C, P);
     while (ans[0] != 1) {
-        C = 1 + this->getRand() % P;
+        C = 1 + this->getRand() % (P - 1);
         ans = evklid(C, P);
     }
     return std::make_pair(C, ans[2]);

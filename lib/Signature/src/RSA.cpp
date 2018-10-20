@@ -10,7 +10,7 @@ Signature::RSA::RSA(std::string in_f, std::string out_f) : Signature(std::move(i
     this->Q = q;
     this->N = P * Q;
     this->F = (P - 1) * (Q - 1);
-    auto[c, d] = op.getCD(0, F);
+    auto[d, c] = op.getCD(0, F);
     this->c = c;
     this->d = d;
 }

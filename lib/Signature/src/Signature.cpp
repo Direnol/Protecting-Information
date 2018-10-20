@@ -56,8 +56,9 @@ void Signature::Signature::ReadText() {
         std::cerr << e.what() << std::endl;
     }
     if (this->input_stream.is_open()) {
-        while (!this->input_stream.eof()) {
-            this->input_stream >> this->text;
+        char m;
+        while (input_stream.read(&m, sizeof m)) {
+            this->text += m;
         }
     }
     this->input_stream.close();

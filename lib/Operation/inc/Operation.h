@@ -58,7 +58,7 @@ public:
 
     int64_t getQ();
 
-    pair<int64_t, int64_t> getCD(int64_t C, int64_t P);
+    pair<int64_t, int64_t> getCD(int64_t C, int64_t F);
 
     uint64_t getRand();
     uint64_t getRand(uint64_t a, uint64_t b);
