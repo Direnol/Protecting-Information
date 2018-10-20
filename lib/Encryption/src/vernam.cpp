@@ -19,7 +19,7 @@ int64_t vernam::Decode(int64_t m)
 vernam::vernam(const std::string &in_file, const std::string &out_file, const std::string &key) : Encrypt(in_file,
                                                                                                           out_file, key)
 {
-    k = op.getQ();
+    k = op.get_simple();
 }
 
 vernam::vernam(const std::string &in_file, const std::string &out_file, const std::string &key, int64_t k)

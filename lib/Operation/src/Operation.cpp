@@ -110,7 +110,7 @@ simple_pair_pq Operation::get_simple_pair()
 {
     int64_t P, Q;
     while (true) {
-        Q = getQ();
+        Q = get_simple();
         P = 2 * Q + 1;
         if (this->is_simple(P))
             break;
@@ -118,11 +118,20 @@ simple_pair_pq Operation::get_simple_pair()
     return std::make_pair(P, Q);
 }
 
-int64_t Operation::getQ()
+int64_t Operation::get_simple()
 {
     int64_t Q = 0;
     while (true) {
         Q = this->getRand(1, 5000);
+        if (is_simple(Q)) return Q;
+    }
+}
+
+int64_t Operation::get_simple(uint64_t a, uint64_t b)
+{
+    int64_t Q = 0;
+    while (true) {
+        Q = this->getRand(a, b);
         if (is_simple(Q)) return Q;
     }
 }

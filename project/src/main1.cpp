@@ -5,7 +5,7 @@ int main() {
     Operation op;
     auto[AA, BB] = op.get_simple_pair();
     std::cout << AA << ' ' << BB << std::endl;
-    std::cout << op.getQ() << ' ' << op.getQ() << std::endl;
+    std::cout << op.get_simple() << ' ' << op.get_simple() << std::endl;
     std::cout << "Operation PowMod(5, 7, 23) result: " << op.powmod(99999999999999999, 7, 23) << std::endl; // 17
     std::cout << "Operation PowMod(5, 13, 23) result: " << op.powmod(5, 13, 23) << std::endl; // 21
     std::cout << "Operation Gcd(100000, 1000230) result: " << op.gcd(100000, 1000230) << std::endl;

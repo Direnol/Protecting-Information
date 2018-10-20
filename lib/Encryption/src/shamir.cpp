@@ -13,7 +13,7 @@ shamir::shamir(const std::string &in_file, const std::string &out_file, const st
         : Encrypt(in_file,
                   out_file, key)
 {
-    P = op.getQ();
+    P = op.get_simple();
     auto[c, d] = op.getCD(0, P);
     C = c;
     D = d;

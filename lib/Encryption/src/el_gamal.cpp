@@ -12,7 +12,7 @@ el_gamal::el_gamal(const std::string &in_file, const std::string &out_file, cons
     P = p;
     Q = q;
     g = op.getG(P, Q);
-    C = op.getQ();
+    C = op.get_simple();
     k = 1 + op.getRand() % (P - 2);
     r = op.powmod(g, k, P);
     D = op.powmod(g, C, P);

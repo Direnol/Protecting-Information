@@ -10,14 +10,14 @@ Signature::RSA::RSA(std::string in_f, std::string out_f) : Signature(std::move(i
     this->Q = q;
     this->N = P * Q;
     this->F = (P - 1) * (Q - 1);
-    auto[d, c] = op.getCD(0, F);
-    this->c = c;
-    this->d = d;
+    auto[D, C] = op.getCD(1 + op.getRand() % (F - 1), F);
+    this->d = D;
+    this->c = C;
 }
 
 void Signature::RSA::Sign() {
     this->ReadText();
-    this->hash = this->TakingHash();
+    this->hash = this->TakingHash() % this->N;
     this->sign = this->op.powmod(this->hash, this->c, this->N);
     this->WriteSign();
 }
@@ -25,9 +25,9 @@ void Signature::RSA::Sign() {
 bool Signature::RSA::TestSign() {
     this->InitFromSignFile();
     this->ReadText();
-    this->hash = this->TakingHash();
+    this->hash = this->TakingHash() % this->N;
     int64_t w = this->op.powmod(this->sign, this->d, this->N);
-    bool res = this->hash == w;
+    bool res = (this->hash % this->N == w);
     return res;
 }
 

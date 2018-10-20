@@ -12,7 +12,7 @@ rsa::rsa(const std::string &in_file, const std::string &out_file, const std::str
     Q = q;
     N = P * Q;
     F = (P - 1) * (Q - 1);
-    auto[D, C] = op.getCD(1 + op.getRand() % (F - 1), F + 1);
+    auto[D, C] = op.getCD(1 + op.getRand() % (F - 1), F);
     this->D = D;
     this->C = C;
 }

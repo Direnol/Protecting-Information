@@ -56,7 +56,8 @@ public:
 
     simple_pair_pq get_simple_pair();
 
-    int64_t getQ();
+    int64_t get_simple();
+    int64_t get_simple(uint64_t a, uint64_t b);
 
     pair<int64_t, int64_t> getCD(int64_t C, int64_t F);
 
