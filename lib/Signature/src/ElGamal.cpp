@@ -1,0 +1,75 @@
+#include <ElGamal.h>
+
+Signature::ElGamal::ElGamal(std::string in_f, std::string out_f) : Signature(std::move(in_f), std::move(out_f)) {
+    auto[p, q] = op.get_simple_pair();
+    P = p;
+    Q = q;
+    g = op.getG(P, Q);
+    x = op.get_simple(1, static_cast<uint64_t>(P - 1));
+    y = op.powmod(g, x, P);
+}
+
+void Signature::ElGamal::WriteSign() {
+    try {
+        this->sign_stream.open(this->sign_file_name, std::ios::out | std::ios::binary);
+    } catch (std::runtime_error& e) {
+        std::cerr << e.what() << std::endl;
+    }
+    if (this->sign_stream.is_open()) {
+        this->sign_stream.write(reinterpret_cast<const char *>(&this->y), sizeof(this->y));
+        this->sign_stream.write(reinterpret_cast<const char *>(&this->g), sizeof(this->g));
+
+        this->sign_stream.write(reinterpret_cast<const char *>(&this->r), sizeof(this->r));
+        this->sign_stream.write(reinterpret_cast<const char *>(&this->sign), sizeof(this->sign));
+    }
+    this->sign_stream.flush();
+    this->sign_stream.close();
+    this->sign_stream.clear();
+}
+
+void Signature::ElGamal::InitFromSignFile() {
+    try {
+        this->sign_stream.open(this->sign_file_name, std::ios::in | std::ios::binary);
+    } catch (std::runtime_error& e) {
+        std::cerr << e.what() << std::endl;
+    }
+    if (this->sign_stream.is_open()) {
+        this->sign_stream.read(reinterpret_cast<char *>(&this->y), sizeof(this->y));
+        this->sign_stream.read(reinterpret_cast<char *>(&this->g), sizeof(this->g));
+
+        this->sign_stream.read(reinterpret_cast<char *>(&this->r), sizeof(this->r));
+        this->sign_stream.read(reinterpret_cast<char *>(&this->sign), sizeof(this->sign));
+    }
+    this->sign_stream.close();
+    this->sign_stream.clear();
+}
+
+void Signature::ElGamal::Sign() {
+    this->ReadText();
+    this->hash = this->TakingHash() % (P);
+    k = op.get_simple(1, static_cast<uint64_t>(P - 1));
+    auto[K, inverse_K] = op.getCD(k, (P - 1));
+    if (K != k)
+        std::cerr << "k and p - 1 is not simple" << std::endl;
+    inverse_k = inverse_K;
+    r = op.powmod(g, k, P);
+    u = (this->hash - x * r) % (P - 1);
+    this->sign = (inverse_k * u) % (P - 1);
+    this->WriteSign();
+}
+
+bool Signature::ElGamal::TestSign() {
+    this->InitFromSignFile();
+    this->ReadText();
+    this->hash = this->TakingHash()  % (P);
+    int64_t right = op.powmod(g, hash, P);
+    int64_t w = op.powmod(y, r, P);
+    int64_t i = op.powmod(r, sign, P);
+    int64_t left = (w * i) % P;
+    bool res = (left == right);
+    return res;
+}
+
+void Signature::ElGamal::Print() {
+
+}
