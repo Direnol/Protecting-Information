@@ -5,7 +5,7 @@ Signature::ElGamal::ElGamal(std::string in_f, std::string out_f) : Signature(std
     P = p;
     Q = q;
     g = op.getG(P, Q);
-    x = op.get_simple(1, static_cast<uint64_t>(P - 1));
+    x = op.getRand(2, static_cast<uint64_t>(P - 2));
     y = op.powmod(g, x, P);
 }
 
@@ -47,7 +47,8 @@ void Signature::ElGamal::InitFromSignFile() {
 void Signature::ElGamal::Sign() {
     this->ReadText();
     this->hash = this->TakingHash() % (P);
-    k = op.get_simple(1, static_cast<uint64_t>(P - 1));
+    k = op.get_simple(static_cast<uint64_t>(P - 1), 1, static_cast<uint64_t>(P - 1));
+//    k = op.get_simple(1, static_cast<uint64_t>(P - 1));
     auto[K, inverse_K] = op.getCD(k, (P - 1));
     if (K != k)
         std::cerr << "k and p - 1 is not simple" << std::endl;

@@ -147,6 +147,16 @@ pair<int64_t, int64_t> Operation::getCD(int64_t C, int64_t P)
     return std::make_pair(C, ans[2]);
 }
 
+uint64_t  Operation::get_simple(uint64_t P, uint64_t a, uint64_t b) {
+    uint64_t C = 1 + this->getRand() % (P);
+    auto ans = evklid(C, P);
+    while (ans[0] != 1) {
+        C = 1 + this->getRand(a, b) % (P);
+        ans = evklid(C, P);
+    }
+    return C;
+}
+
 uint64_t Operation::getRand() {
     long seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine rand_generator(seed);
