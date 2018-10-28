@@ -12,6 +12,7 @@
 
 
 namespace Signature {
+
     class Signature {
     protected:
         std::string input_file_name;

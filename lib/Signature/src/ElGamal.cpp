@@ -1,6 +1,7 @@
 #include <ElGamal.h>
 
-Signature::ElGamal::ElGamal(std::string in_f, std::string out_f) : Signature(std::move(in_f), std::move(out_f)) {
+Signature::ElGamal::ElGamal(std::string in_f, std::string out_f) : Signature(std::move(in_f), std::move(out_f))
+{
     auto[p, q] = op.get_simple_pair();
     P = p;
     Q = q;
@@ -10,10 +11,11 @@ Signature::ElGamal::ElGamal(std::string in_f, std::string out_f) : Signature(std
     std::cout << "Init: P = " << P << "; Q = " << Q << "; g = " << g << "; x = " << x << "; y = " << y << std::endl;
 }
 
-void Signature::ElGamal::WriteSign() {
+void Signature::ElGamal::WriteSign()
+{
     try {
         this->sign_stream.open(this->sign_file_name, std::ios::out | std::ios::binary);
-    } catch (std::runtime_error& e) {
+    } catch (std::runtime_error &e) {
         std::cerr << e.what() << std::endl;
     }
     if (this->sign_stream.is_open()) {
@@ -28,10 +30,11 @@ void Signature::ElGamal::WriteSign() {
     this->sign_stream.clear();
 }
 
-void Signature::ElGamal::InitFromSignFile() {
+void Signature::ElGamal::InitFromSignFile()
+{
     try {
         this->sign_stream.open(this->sign_file_name, std::ios::in | std::ios::binary);
-    } catch (std::runtime_error& e) {
+    } catch (std::runtime_error &e) {
         std::cerr << e.what() << std::endl;
     }
     if (this->sign_stream.is_open()) {
@@ -45,7 +48,8 @@ void Signature::ElGamal::InitFromSignFile() {
     this->sign_stream.clear();
 }
 
-void Signature::ElGamal::Sign() {
+void Signature::ElGamal::Sign()
+{
     this->ReadText();
     this->hash = 2 + this->TakingHash() % (P);
     k = op.get_simple(static_cast<uint64_t>(P - 1), 2, static_cast<uint64_t>(P - 2));
@@ -60,22 +64,26 @@ void Signature::ElGamal::Sign() {
     u = _u % (P - 1);
     this->sign = (inverse_k * u) % (P - 1);
     this->WriteSign();
-    std::cout << "Sign: hash = " << hash << "; k = " << k << "; inv_k = " << inverse_K << "; r = " << r << "; u = " << u << "; sign = " << sign << std::endl;
 }
 
-bool Signature::ElGamal::TestSign() {
+bool Signature::ElGamal::TestSign()
+{
     this->InitFromSignFile();
     this->ReadText();
-    this->hash = 2 + this->TakingHash()  % (P);
+    this->hash = 2 + this->TakingHash() % (P);
     int64_t right = op.powmod(g, hash, P);
     int64_t w = op.powmod(y, r, P);
     int64_t i = op.powmod(r, sign, P);
     int64_t left = (w * i) % P;
     bool res = (left == right);
-    std::cout << "Sign: hash = " << hash << "; right = " << right << "; w = " << w << "; i = " << i << "; left = " << left << "; res = " << res << std::endl;
+    std::cout << "Sign: hash = " << hash << "; right = " << right << "; w = " << w << "; i = " << i << "; left = "
+              << left << "; res = " << res << std::endl;
     return res;
 }
 
-void Signature::ElGamal::Print() {
+void Signature::ElGamal::Print()
+{
+    std::cout << "Sign: hash = " << hash << "; k = " << k << "; r = " << r << "; u = " << u
+              << "; sign = " << sign << std::endl;
 
 }
