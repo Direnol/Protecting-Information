@@ -7,6 +7,7 @@ Signature::ElGamal::ElGamal(std::string in_f, std::string out_f) : Signature(std
     g = op.getG(P, Q);
     x = op.getRand(2, static_cast<uint64_t>(P - 2));
     y = op.powmod(g, x, P);
+    std::cout << "Init: P = " << P << "; Q = " << Q << "; g = " << g << "; x = " << x << "; y = " << y << std::endl;
 }
 
 void Signature::ElGamal::WriteSign() {
@@ -46,28 +47,32 @@ void Signature::ElGamal::InitFromSignFile() {
 
 void Signature::ElGamal::Sign() {
     this->ReadText();
-    this->hash = this->TakingHash() % (P);
-    k = op.get_simple(static_cast<uint64_t>(P - 1), 1, static_cast<uint64_t>(P - 1));
-//    k = op.get_simple(1, static_cast<uint64_t>(P - 1));
+    this->hash = 2 + this->TakingHash() % (P);
+    k = op.get_simple(static_cast<uint64_t>(P - 1), 2, static_cast<uint64_t>(P - 2));
+    k = op.get_simple(1, static_cast<uint64_t>(P - 1));
     auto[K, inverse_K] = op.getCD(k, (P - 1));
     if (K != k)
         std::cerr << "k and p - 1 is not simple" << std::endl;
     inverse_k = inverse_K;
     r = op.powmod(g, k, P);
-    u = (this->hash - x * r) % (P - 1);
+    int64_t _u = (this->hash - x * r);
+    while (_u < 0) _u += (P - 1);
+    u = _u % (P - 1);
     this->sign = (inverse_k * u) % (P - 1);
     this->WriteSign();
+    std::cout << "Sign: hash = " << hash << "; k = " << k << "; inv_k = " << inverse_K << "; r = " << r << "; u = " << u << "; sign = " << sign << std::endl;
 }
 
 bool Signature::ElGamal::TestSign() {
     this->InitFromSignFile();
     this->ReadText();
-    this->hash = this->TakingHash()  % (P);
+    this->hash = 2 + this->TakingHash()  % (P);
     int64_t right = op.powmod(g, hash, P);
     int64_t w = op.powmod(y, r, P);
     int64_t i = op.powmod(r, sign, P);
     int64_t left = (w * i) % P;
     bool res = (left == right);
+    std::cout << "Sign: hash = " << hash << "; right = " << right << "; w = " << w << "; i = " << i << "; left = " << left << "; res = " << res << std::endl;
     return res;
 }
 
