@@ -138,7 +138,7 @@ int64_t Operation::get_simple(uint64_t a, uint64_t b)
 
 pair<int64_t, int64_t> Operation::getCD(int64_t C, int64_t P)
 {
-    if (C == 0) C = 1 + this->getRand() % (P - 1);
+    if (C == 0) C = get_simple() % (P - 1);
     auto ans = evklid(C, P);
     while (ans[0] != 1) {
         C = 1 + this->getRand() % (P - 1);

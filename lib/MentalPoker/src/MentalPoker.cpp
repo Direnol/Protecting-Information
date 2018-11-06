@@ -7,17 +7,17 @@
 MentalPoker::MentalPoker(const uint64_t count_player, uint64_t P, const uint64_t count_card)
 {
     if (P == 0) {
-        P = op.getRand(1, 8000);
+        P = static_cast<uint64_t>(op.get_simple());
     }
     this->P = P;
-    std::cout << "P = " << P << std::endl;
+    std::cout << "P = " << this->P << std::endl;
     for (auto i = 0; i < count_player; ++i) {
         this->players.emplace_back(this->P);
     }
     for (uint64_t i = 0; i < count_card; ++i) {
         this->cards.emplace_back(i);
     }
-
+    MentalCard::shuffle(this->cards);
     for (auto &c: this->cards) {
         std::cout << c << ' ';
     }
@@ -51,19 +51,19 @@ std::pair<std::vector<MentalPlayer>, std::vector<MentalCard>> MentalPoker::game(
 *    какая это карта
 * 5) Мешаем карты
 */
-    for (auto &p: this->players) {
+    for (auto i = 0; i < players.size(); ++i) {
         MentalCard pcard[2];
-        for (auto &i : pcard) {
+        for (auto &c : pcard) {
             auto idx = op.getRand() % this->cards.size();
-            i = this->cards[idx];
-            for (auto other: this->players) {
-                if (&other != &p) {
-                    other.decode(i);
+            c = this->cards[idx];
+            for (auto j = 0; j < players.size(); ++j) {
+                if (i != j) {
+                    players[j].decode(c);
                 }
             }
             cards.erase(this->cards.begin() + idx);
         }
-        p.decode(std::make_pair(pcard[0], pcard[1]));
+        players[i].decode(std::make_pair(pcard[0], pcard[1]));
         MentalCard::shuffle(this->cards);
     }
     std::vector<MentalCard> desk;

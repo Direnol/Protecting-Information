@@ -23,25 +23,24 @@ public:
     explicit MentalPlayer(uint64_t P)
     {
         auto [C, D] = op.getCD(0, P - 1);
-        std::cout << "C = " << C << " D = " << D << std::endl;
         this->c = C;
         this->d = D;
         this->p = P;
     }
 
+    void decode(MentalCard &card) {
+        auto de = op.powmod(card.getCard(), this->d, this->p); //card.getCard() ^ this->p;
+        card.setCard(de);
+    }
 
-    // TODO: encrypt
     void encrypt(std::vector<MentalCard> &cards) {
         for (auto &c: cards) {
-            c.setCard(op.powmod(c.getCard(), this->c, this->p));
+            auto en = op.powmod(c.getCard(), this->c, this->p);
+            c.setCard(en);
         }
         MentalCard::shuffle(cards);
     }
 
-    // TODO: decode
-    void decode(MentalCard &card) {
-        card.setCard(op.powmod(card.getCard(), this->d, this->p));
-    }
 
     void decode(std::pair<MentalCard, MentalCard> cards) {
         decode(cards.first);
