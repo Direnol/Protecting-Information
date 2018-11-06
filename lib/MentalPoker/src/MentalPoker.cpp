@@ -4,11 +4,13 @@
 
 #include <MetalPoker.h>
 
-MentalPoker::MentalPoker(const uint64_t count_player, const uint64_t P, const uint64_t count_card)
+MentalPoker::MentalPoker(const uint64_t count_player, uint64_t P, const uint64_t count_card)
 {
     if (P == 0) {
-        this->P = 1 + op.getRand();
+        P = op.getRand(1, 8000);
     }
+    this->P = P;
+    std::cout << "P = " << P << std::endl;
     for (auto i = 0; i < count_player; ++i) {
         this->players.emplace_back(this->P);
     }

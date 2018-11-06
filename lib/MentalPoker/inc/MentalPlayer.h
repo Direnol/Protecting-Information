@@ -23,6 +23,7 @@ public:
     explicit MentalPlayer(uint64_t P)
     {
         auto [C, D] = op.getCD(0, P - 1);
+        std::cout << "C = " << C << " D = " << D << std::endl;
         this->c = C;
         this->d = D;
         this->p = P;

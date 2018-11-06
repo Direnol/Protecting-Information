@@ -14,7 +14,7 @@ private:
     std::vector<MentalPlayer> players;
     uint64_t P;
 public:
-    MentalPoker(const uint64_t count_player, const uint64_t P = 0, const uint64_t count_card = 52);
+    MentalPoker(const uint64_t count_player, uint64_t P = 0, const uint64_t count_card = 52);
     std::pair<std::vector<MentalPlayer>, std::vector<MentalCard>> game();
 };
 
