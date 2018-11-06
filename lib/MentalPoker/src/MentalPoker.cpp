@@ -10,7 +10,7 @@ MentalPoker::MentalPoker(const uint64_t count_player, const uint64_t P, const ui
         this->P = 1 + op.getRand();
     }
     for (auto i = 0; i < count_player; ++i) {
-        this->players.emplace_back(this->P - 1);
+        this->players.emplace_back(this->P);
     }
     for (uint64_t i = 0; i < count_card; ++i) {
         this->cards.emplace_back(i);

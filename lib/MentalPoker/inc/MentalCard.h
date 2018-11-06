@@ -51,6 +51,11 @@ public:
         return os;
     }
 
+    void setCard(uint64_t card)
+    {
+        this->card = card;
+    }
+
 };
 
 

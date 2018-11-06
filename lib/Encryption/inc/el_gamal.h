@@ -21,6 +21,7 @@ public:
 
     void Decode() override;
 
+
     el_gamal(const std::string &in_file, const std::string &out_file, const std::string &key, int64_t P, int64_t Q,
              int64_t C, int64_t g);
 
