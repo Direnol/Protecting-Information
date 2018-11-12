@@ -7,7 +7,10 @@
 
 int main()
 {
-    MentalPoker poker(2);
+    uint64_t n;
+    std::cout << "Enter count of player" << std::endl;
+    std::cin >> n;
+    MentalPoker poker(n);
     auto [players, desk] = poker.game();
     std::cout << "Table: ";
     for (auto &c: desk) {

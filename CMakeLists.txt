@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(Protection-Information)
 
-set(DIRS Operation OperationOnFile Encryption Signature MentalPoker)
+set(DIRS Operation OperationOnFile Encryption Signature MentalPoker DigitalMoney)
 set(LIB lib)
 
 foreach(loop ${DIRS})
