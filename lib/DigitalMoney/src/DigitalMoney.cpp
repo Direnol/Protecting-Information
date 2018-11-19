@@ -2,32 +2,32 @@
 // Created by direnol on 12.11.18.
 //
 
-#include <md5.h>
 #include "DigitalMoney.h"
 
 DigitalMoney::DigitalMoney()
 {
-    P = op.get_simple();
-    Q = op.get_simple();
+    auto[p, q] = op.get_simple_pair();
+    P = 17;
+    Q = 7;
     N = P * Q;
     auto F = (P - 1) * (Q - 1);
     for (int i = 1, j = 1; i <= 1000; i *= 10, j++) {
-        auto[c, d] = op.getCD(0, F);
-        D[j] = d;
-        C[j] = c;
+        auto[d, c] = op.getCD(1 + op.getRand() % (F - 1), F);
+        D[j] = 5;
+        C[j] = 77;
     }
 }
 
 int64_t DigitalMoney::hash_calculation(int64_t m)
 {
-    uint8_t res[16];
-    uint8_t arr[1];
-    int64_t hash = 0;
-    md5(arr, static_cast<size_t>(m), res);
-    for (auto re : res) {
-        hash += re << 4;
+    auto* h = reinterpret_cast<unsigned char*>(&m);
+    auto result = MD5(h, sizeof(h), nullptr);
+    int64_t hash = 2;
+    uint64_t mod = 12341234;
+    for (unsigned int i = 0; i < MD5_DIGEST_LENGTH; i++) {
+        hash = op.powmod(hash, result[i], mod);
     }
-    return hash;
+    return static_cast<uint64_t>(hash);
 }
 
 // n = amount_customer
@@ -44,7 +44,7 @@ void DigitalMoney::operation_customer(int64_t n)
     }
     //std::cout << "position_domination=%ld\n", position_domination);
     int64_t f_n, r, r_inversion;
-    f_n = hash_calculation(n);
+    f_n = hash_calculation(n) % N;
     auto[_r, _r_inv] = op.getCD(0, N);
     r = _r;
     r_inversion = _r_inv;
@@ -58,7 +58,7 @@ void DigitalMoney::operation_customer(int64_t n)
     //{n, s}
     s = (r_inversion * s_home_f) % N;
 
-    f_n = hash_calculation(n);
+    f_n = hash_calculation(n) % N;
     if (op.powmod(s, D[position_domination], N) == f_n) {
         std::cout << "Покупка совершена!" << std::endl;
     } else {

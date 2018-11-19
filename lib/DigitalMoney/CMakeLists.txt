@@ -6,4 +6,4 @@ include_directories(inc)
 
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build/lib)
 add_library(DigitalMoney SHARED src/DigitalMoney.cpp inc/DigitalMoney.h inc/md5.h)
-target_link_libraries(DigitalMoney Operation)
+target_link_libraries(DigitalMoney Operation crypto)

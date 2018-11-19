@@ -12,6 +12,7 @@
 #include <time.h>
 #include <Operation.h>
 #include <iostream>
+#include <openssl/md5.h>
 
 class DigitalMoney {
     int64_t P, Q, C[5];
