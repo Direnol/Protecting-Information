@@ -7,14 +7,14 @@
 DigitalMoney::DigitalMoney()
 {
     auto[p, q] = op.get_simple_pair();
-    P = 17;
-    Q = 7;
+    P = p;
+    Q = q;
     N = P * Q;
     auto F = (P - 1) * (Q - 1);
     for (int i = 1, j = 1; i <= 1000; i *= 10, j++) {
         auto[d, c] = op.getCD(1 + op.getRand() % (F - 1), F);
-        D[j] = 5;
-        C[j] = 77;
+        D[j] = d;
+        C[j] = c;
     }
 }
 
