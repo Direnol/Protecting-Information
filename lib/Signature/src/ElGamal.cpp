@@ -76,7 +76,7 @@ bool Signature::ElGamal::TestSign()
     int64_t i = op.powmod(r, sign, P);
     int64_t left = (w * i) % P;
     bool res = (left == right);
-    std::cout << "Sign: hash = " << hash << "; right = " << right << "; w = " << w << "; i = " << i << "; left = "
+    std::cout << "Sign: hash = " << hash << "; _right = " << right << "; w = " << w << "; i = " << i << "; _left = "
               << left << "; res = " << res << std::endl;
     return res;
 }

@@ -64,6 +64,8 @@ public:
 
     uint64_t getRand();
     uint64_t getRand(uint64_t a, uint64_t b);
+
+    bool ferma(u_int64_t x);
 };
 
 

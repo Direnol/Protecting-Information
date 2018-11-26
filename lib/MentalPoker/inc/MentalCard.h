@@ -43,7 +43,6 @@ public:
 
     }
 
-    // TODO: Mapping cards
     // example: 15 -> Tuz B; 21 -> Tus K ...
     friend std::ostream &operator<<(std::ostream &os, const MentalCard &card)
     {

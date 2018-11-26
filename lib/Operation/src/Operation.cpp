@@ -1,7 +1,7 @@
 //
 // Created by stanley on 04.09.18.
 //
-#include "../inc/Operation.h"
+#include <Operation.h>
 
 Operation::Operation() = default;
 
@@ -171,4 +171,22 @@ uint64_t Operation::getRand(uint64_t a, uint64_t b) {
     std::uniform_int_distribution<uint64_t> distribution(a, b);
     uint64_t ret = distribution(rand_generator);
     return ret;
+}
+
+bool Operation::ferma(u_int64_t x)
+{
+    if (x == 2) {
+        return true;
+    }
+
+    for (auto i = 0; i < 100; i++) {
+        auto a = (getRand() % (x - 2)) + 2;
+        if (gcd(a, x) != 1) {
+            return false;
+        }
+        if (powmod(a, x - 1, x) != 1) {
+            return false;
+        }
+    }
+    return true;
 }
