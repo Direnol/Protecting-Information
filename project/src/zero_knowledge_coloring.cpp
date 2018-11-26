@@ -11,6 +11,7 @@ int main()
     std::cout << "File open: " << std::boolalpha << in.is_open() << std::noboolalpha << std::endl;
     ZeroColoring zl(in);
     zl.print();
+    std::cout << "Start zero" << std::endl;
     zl.zero_v();
     std::cout << std::boolalpha << zl.zero_g() << std::endl;
     return 0;

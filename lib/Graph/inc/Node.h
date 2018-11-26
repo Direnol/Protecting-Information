@@ -26,14 +26,14 @@ public:
 
     void encrypt(color_t new_color);
 
-    uint64_t z();
+    int64_t z();
 
 private:
     Operation op;
     node_t node;
     color_t color;
     //    lint P;
-    uint64_t Q, N, r, Z, C, D, P;
+    int64_t Q, N, r, Z, C, D, P;
 };
 
 
